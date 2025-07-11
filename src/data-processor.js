@@ -15,3 +15,30 @@ export function processXpOverTimeData(transactions) {
 
     return Object.entries(monthlyXP).map(([date, xp]) => ({ date, xp }));
 }
+
+
+// progressGradesData groups projects by category, calculate pass/fail counts, and computes
+// pass rates for each category.
+export function processGradesData(progress) {
+    if (!progress?.length) return []; // uses chaining operator ?. to avoid runtime errors if the object is null or undefined.
+    const projectGroups = {};
+
+    progress.forEach(proj => {
+        if (proj.path.includes("checkpoint") && proj.path.includes("rust")) {
+            const pathParts = proj.path.split("/");
+            const category = pathParts.length > 1 ? pathParts[pathParts.length - 1] : "Other";
+            projectGroups[category] = projectGroups[category] || { pass: 0, fail: 0, total: 0 };
+            projectGroups[category].total++;
+            proj.grade === 1 ? projectGroups[category].pass++ : projectGroups[category].fail++;
+        }
+    });
+
+    return Object.entries(projectGroups)
+        .filter(([category]) => !["Other", ""].includes(category))
+        .map(([category, data]) => ({
+            label: category,
+            pass: data.pass,
+            fail: data.fail,
+            passRate: data.total > 0 ? (data.pass / data.total) * 100 : 0
+        }));
+}
