@@ -42,5 +42,15 @@ export function displayStats(transactions, progress, results) {
         </div>`;
 }
 
-
-
+// displayPendingProjects function displays a list of projects that have not been completed yet.
+export function displayPendingProjects(items) {
+    const ul = document.getElementById("pending-projects");
+    ul.innerHTML = "";
+    items.forEach(item => {
+        const li = document.createElement("li");
+        const name = item.path.split("/").pop().replace(/-/g, " ");
+        const date = new Date(item.createdAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+        li.innerHTML = `<span class="project-name">${name}</span><span class="start-date">Started: ${date}</span>`;
+        ul.appendChild(li);
+    });
+}
