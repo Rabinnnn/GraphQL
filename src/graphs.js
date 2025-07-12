@@ -311,5 +311,23 @@ export function drawBarChart(data) {
     g.appendChild(ct);
   });
 
+   // Add legend
+  const lx = innerWidth - 80;
+  const ly = -margin.top / 2 + 10;
+  const lrect = document.createElementNS(svg.namespaceURI, "rect");
+  lrect.setAttribute("x", lx);
+  lrect.setAttribute("y", ly);
+  lrect.setAttribute("width", 15);
+  lrect.setAttribute("height", 15);
+  lrect.setAttribute("fill", "var(--color-primary)");
+  g.appendChild(lrect);
+
+  const ltxt = document.createElementNS(svg.namespaceURI, "text");
+  ltxt.setAttribute("x", lx + 20);
+  ltxt.setAttribute("y", ly + 12);
+  ltxt.setAttribute("class", "legend-text");
+  ltxt.textContent = "Pass Rate";
+  g.appendChild(ltxt);
+
 }
 
