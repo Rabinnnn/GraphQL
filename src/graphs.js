@@ -271,5 +271,45 @@ export function drawBarChart(data) {
     g.appendChild(axis(-5, y, 0, y, "tick-line"));
   }
 
+   // create the bars
+  data.forEach((d, i) => {
+    const x = i * xBand + (xBand - barWidth) / 2;
+    const y = yScale(d.passRate);
+    const h = innerHeight - y;
+
+    const rect = document.createElementNS(svg.namespaceURI, "rect");
+    rect.setAttribute("x", x);
+    rect.setAttribute("y", y);
+    rect.setAttribute("width", barWidth);
+    rect.setAttribute("height", h);
+    rect.setAttribute("class", "bar");
+    rect.setAttribute("rx", 4);
+    rect.setAttribute("ry", 4);
+
+    // tooltip
+    const tip = document.createElementNS(svg.namespaceURI, "title");
+    tip.textContent = `${d.label}: ${d.passRate.toFixed(1)}% (${d.pass}/${
+      d.pass + d.fail
+    })`;
+    rect.appendChild(tip);
+
+    g.appendChild(rect);
+
+      // category label
+    const ct = document.createElementNS(svg.namespaceURI, "text");
+    ct.setAttribute("x", x + barWidth / 2);
+    ct.setAttribute("y", innerHeight + 20);
+    ct.setAttribute("text-anchor", data.length > 4 ? "start" : "middle");
+    ct.setAttribute(
+      "transform",
+      data.length > 4
+        ? `rotate(45,${x + barWidth / 2},${innerHeight + 20})`
+        : ""
+    );
+    ct.setAttribute("class", "category-label");
+    ct.textContent = d.label;
+    g.appendChild(ct);
+  });
+
 }
 
