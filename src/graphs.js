@@ -250,5 +250,26 @@ export function drawBarChart(data) {
   // Y axis
   g.appendChild(axis(0, 0, 0, innerHeight, "axis-line"));
 
+  // Add tics and grid
+  const ticks = 5;
+  for (let i = 0; i <= ticks; i++) {
+    const y = (innerHeight / ticks) * i;
+    const pct = 100 - (i / ticks) * 100;
+
+    const grid = axis(0, y, innerWidth, y, "grid-line");
+    g.appendChild(grid);
+
+    // tick and label
+    const t = document.createElementNS(svg.namespaceURI, "text");
+    t.setAttribute("x", -10);
+    t.setAttribute("y", y + 4);
+    t.setAttribute("text-anchor", "end");
+    t.setAttribute("class", "tick-label");
+    t.textContent = `${pct}%`;
+    g.appendChild(t);
+
+    g.appendChild(axis(-5, y, 0, y, "tick-line"));
+  }
+
 }
 
