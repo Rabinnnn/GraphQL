@@ -216,6 +216,39 @@ export function drawBarChart(data) {
     return;
   }
 
+    // scales
+  const xBand = innerWidth / data.length;
+  const barWidth = xBand * 0.7;
+  const yScale = (rate) => innerHeight - (rate / 100) * innerHeight;
+
+  // group for margins
+  const g = document.createElementNS(svg.namespaceURI, "g");
+  g.setAttribute("transform", `translate(${margin.left},${margin.top})`);
+  svg.appendChild(g);
+
+  // title
+  const title = document.createElementNS(svg.namespaceURI, "text");
+  title.setAttribute("x", width / 2);
+  title.setAttribute("y", margin.top / 2);
+  title.setAttribute("text-anchor", "middle");
+  title.setAttribute("class", "chart-title");
+  title.textContent = "Project Success Rates by Category";
+  svg.appendChild(title);
+
+  // axes lines
+  const axis = (x1, y1, x2, y2, cls = "") => {
+    const line = document.createElementNS(svg.namespaceURI, "line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("class", cls);
+    return line;
+  };
+  // X axis
+  g.appendChild(axis(0, innerHeight, innerWidth * 2, innerHeight, "axis-line"));
+  // Y axis
+  g.appendChild(axis(0, 0, 0, innerHeight, "axis-line"));
 
 }
 
