@@ -185,6 +185,37 @@ export function drawLineGraph(data) {
   
       svg.appendChild(circle);
     });
-
-  
+ 
 }
+
+
+// drawBarChart function is used for creating a grades/progress bar chart
+export function drawBarChart(data) {
+  const svg = document.getElementById("bar-chart");
+  svg.innerHTML = "";
+
+  // Set dimensions
+  const width = 600;
+  const height = svg.clientHeight || 300;
+  // margin convention
+  const margin = { top: 50, right: 40, bottom: 80, left: 60 };
+  const innerWidth = width - margin.left - margin.right;
+  const innerHeight = height - margin.top - margin.bottom;
+
+  // set up responsive viewBox
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
+
+  if (!data || data.length === 0) {
+    const noData = document.createElementNS(svg.namespaceURI, "text");
+    noData.setAttribute("x", width / 2);
+    noData.setAttribute("y", height / 2);
+    noData.setAttribute("text-anchor", "middle");
+    noData.textContent = "No grade data available";
+    svg.appendChild(noData);
+    return;
+  }
+
+
+}
+
