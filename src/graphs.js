@@ -124,5 +124,45 @@ export function drawLineGraph(data) {
       }
     });
 
+    // Y-axis (XP values)
+    for (let i = 0; i <= 5; i++) {
+      const yPos = height - padding - (i / 5) * (height - 2 * padding);
+      const xpValue = Math.round((i / 5) * maxXP);
+  
+      // Tick mark
+      const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      tick.setAttribute("x1", leftPadding - 5);
+      tick.setAttribute("y1", yPos);
+      tick.setAttribute("x2", leftPadding);
+      tick.setAttribute("y2", yPos);
+      tick.setAttribute("stroke", "black");
+      svg.appendChild(tick);
+  
+      // Label 
+      const label = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "text"
+      );
+      label.setAttribute("x", leftPadding - 10); 
+      label.setAttribute("y", yPos + 5);
+      label.setAttribute("text-anchor", "end");
+      label.setAttribute("font-size", "12");
+      label.textContent = Math.round(xpValue / 1024);
+      svg.appendChild(label);
+  
+      // Grid line (optional)
+      const gridLine = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line"
+      );
+      gridLine.setAttribute("x1", leftPadding);
+      gridLine.setAttribute("y1", yPos);
+      gridLine.setAttribute("x2", width - padding);
+      gridLine.setAttribute("y2", yPos);
+      gridLine.setAttribute("stroke", "#e0e0e0");
+      gridLine.setAttribute("stroke-dasharray", "5,5");
+      svg.appendChild(gridLine);
+    }
+
   
 }
