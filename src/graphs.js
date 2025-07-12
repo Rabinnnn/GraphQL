@@ -94,5 +94,35 @@ export function drawLineGraph(data) {
     path.setAttribute("fill", "none");
     svg.appendChild(path);
 
+      // Add axis ticks and labels
+    // X-axis (dates)
+    points.forEach((pt, i) => {
+      if (i % Math.ceil(points.length / 5) === 0 || i === points.length - 1) {
+        // Tick mark
+        const tick = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "line"
+        );
+        tick.setAttribute("x1", pt.x);
+        tick.setAttribute("y1", height - padding);
+        tick.setAttribute("x2", pt.x);
+        tick.setAttribute("y2", height - padding + 5);
+        tick.setAttribute("stroke", "black");
+        svg.appendChild(tick);
+  
+        // Label
+        const label = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "text"
+        );
+        label.setAttribute("x", pt.x);
+        label.setAttribute("y", height - padding + 20);
+        label.setAttribute("text-anchor", "middle");
+        label.setAttribute("font-size", "12");
+        label.textContent = pt.data.date;
+        svg.appendChild(label);
+      }
+    });
+
   
 }
