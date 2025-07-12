@@ -164,5 +164,27 @@ export function drawLineGraph(data) {
       svg.appendChild(gridLine);
     }
 
+    // Add data points with tooltips
+    points.forEach((pt) => {
+      const circle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle"
+      );
+      circle.setAttribute("cx", pt.x);
+      circle.setAttribute("cy", pt.y);
+      circle.setAttribute("r", 5);
+      circle.setAttribute("fill", "#007bff");
+  
+      // Add title for tooltip
+      const title = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "title"
+      );
+      title.textContent = `${pt.data.date}: ${pt.data.xp} XP`;
+      circle.appendChild(title);
+  
+      svg.appendChild(circle);
+    });
+
   
 }
