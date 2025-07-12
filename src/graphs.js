@@ -71,5 +71,28 @@ export function drawLineGraph(data) {
     yLabel.textContent = "XP Earned";
     svg.appendChild(yLabel);
 
+    // Create points for the line graph
+    const points = data.map((d, i) => {
+      const x =
+        leftPadding +
+        (i / (data.length - 1 || 1)) * (width - padding - leftPadding);
+      const y = height - padding - (d.xp / maxXP) * (height - 2 * padding);
+      return { x, y, data: d };
+    });
+  
+    // Create the path string
+    let pathD = `M ${points[0].x} ${points[0].y} `;
+    for (let i = 1; i < points.length; i++) {
+      pathD += `L ${points[i].x} ${points[i].y} `;
+    }
+  
+    // Create SVG path element
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", pathD);
+    path.setAttribute("stroke", "#007bff");
+    path.setAttribute("stroke-width", "3");
+    path.setAttribute("fill", "none");
+    svg.appendChild(path);
+
   
 }
