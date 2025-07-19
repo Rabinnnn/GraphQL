@@ -310,9 +310,14 @@
     }
   }
 
-  @media (min-width: 1200px) {
-    #graphs-section {
-      grid-template-columns: repeat(3, 1fr);
+  /* Force pie chart to new row */
+  .pie-chart-container {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 768px) {
+    .pie-chart-container {
+      grid-column: 1 / -1;
     }
   }
   
