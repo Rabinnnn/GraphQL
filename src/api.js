@@ -1,8 +1,8 @@
 // import required functions
 import { GRAPHQL_ENDPOINT } from './config.js';
 import { displayUserData, displayStats, displayPendingProjects } from './ui.js';
-import { processXpOverTimeData, processGradesData } from './data-processor.js';
-import { drawLineGraph, drawBarChart } from './graphs.js';
+import { processXpOverTimeData, processGradesData, processSkillsData } from './data-processor.js';
+import { drawLineGraph, drawBarChart, drawPieChart } from './graphs.js';
 
 //loadProfileData is an asynchronous function used to fetch and display user data
 export async function loadProfileData(token) {
@@ -16,6 +16,10 @@ export async function loadProfileData(token) {
       login
       email
       attrs
+      skills: transactions(where: { type: { _like: "skill_%" } }, order_by: [{ amount: desc }]) {
+            type
+            amount
+          }
     }
 
     transaction(
@@ -88,10 +92,14 @@ export async function loadProfileData(token) {
 
         const { user, transaction, progress, result: resultData, pendingProgress } = result.data;
         
+        // Debug: Check what skills data looks like
+        console.log("Skills data:", user[0].skills);
+        
     // update UI based on the data returned by the query
         displayUserData(user[0], transaction);
         drawLineGraph(processXpOverTimeData(transaction));
         drawBarChart(processGradesData(progress, resultData));
+        drawPieChart(processSkillsData(user[0].skills));
         displayStats(transaction, progress, resultData);
         displayPendingProjects(pendingProgress);
     } catch (error) {

@@ -315,3 +315,141 @@ export function drawBarChart(data) {
   });
 }
 
+// drawPieChart function creates a pie chart for skills data
+export function drawPieChart(data) {
+    const svg = document.getElementById("pie-chart");
+    svg.innerHTML = "";
+
+    const width = 400;
+    const height = 300;
+    const radius = Math.min(width, height) / 2 - 40;
+    const centerX = width / 2;
+    const centerY = height / 2;
+
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
+
+    if (!data || data.length === 0) {
+        const noData = document.createElementNS(svg.namespaceURI, "text");
+        noData.setAttribute("x", centerX);
+        noData.setAttribute("y", centerY);
+        noData.setAttribute("text-anchor", "middle");
+        noData.textContent = "No skills data available";
+        svg.appendChild(noData);
+        return;
+    }
+
+    // Color palette for pie slices
+    const colors = [
+        '#22c55e', '#16a34a', '#15803d', '#166534', '#14532d',
+        '#84cc16', '#65a30d', '#4d7c0f', '#365314', '#1a2e05'
+    ];
+
+    // Add gradients for pie slices
+    const defs = document.createElementNS(svg.namespaceURI, "defs");
+    data.forEach((d, i) => {
+        const gradient = document.createElementNS(svg.namespaceURI, "radialGradient");
+        gradient.setAttribute("id", `pieGradient${i}`);
+        gradient.setAttribute("cx", "30%");
+        gradient.setAttribute("cy", "30%");
+        
+        const stop1 = document.createElementNS(svg.namespaceURI, "stop");
+        stop1.setAttribute("offset", "0%");
+        stop1.setAttribute("stop-color", colors[i % colors.length]);
+        stop1.setAttribute("stop-opacity", "1");
+        
+        const stop2 = document.createElementNS(svg.namespaceURI, "stop");
+        stop2.setAttribute("offset", "100%");
+        stop2.setAttribute("stop-color", colors[i % colors.length]);
+        stop2.setAttribute("stop-opacity", "0.8");
+        
+        gradient.appendChild(stop1);
+        gradient.appendChild(stop2);
+        defs.appendChild(gradient);
+    });
+    svg.appendChild(defs);
+
+    // Add title
+    const title = document.createElementNS(svg.namespaceURI, "text");
+    title.setAttribute("x", centerX);
+    title.setAttribute("y", 20);
+    title.setAttribute("text-anchor", "middle");
+    title.setAttribute("class", "chart-title");
+    title.textContent = "Skills Distribution";
+    svg.appendChild(title);
+
+    let currentAngle = -Math.PI / 2; // Start from top
+
+    data.forEach((d, i) => {
+        const sliceAngle = (d.percentage / 100) * 2 * Math.PI;
+        const endAngle = currentAngle + sliceAngle;
+
+        // Calculate path coordinates
+        const x1 = centerX + radius * Math.cos(currentAngle);
+        const y1 = centerY + radius * Math.sin(currentAngle);
+        const x2 = centerX + radius * Math.cos(endAngle);
+        const y2 = centerY + radius * Math.sin(endAngle);
+
+        const largeArcFlag = sliceAngle > Math.PI ? 1 : 0;
+
+        const pathData = [
+            `M ${centerX} ${centerY}`,
+            `L ${x1} ${y1}`,
+            `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+            'Z'
+        ].join(' ');
+
+        const path = document.createElementNS(svg.namespaceURI, "path");
+        path.setAttribute("d", pathData);
+        path.setAttribute("fill", `url(#pieGradient${i})`);
+        path.setAttribute("stroke", "white");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("class", "pie-slice");
+        
+        const tooltip = document.createElementNS(svg.namespaceURI, "title");
+        tooltip.textContent = `${d.category}: ${d.percentage.toFixed(1)}% (${d.amount} points)`;
+        path.appendChild(tooltip);
+
+        svg.appendChild(path);
+
+        // Add labels for larger slices
+        if (d.percentage > 5) {
+            const labelAngle = currentAngle + sliceAngle / 2;
+            const labelRadius = radius * 0.7;
+            const labelX = centerX + labelRadius * Math.cos(labelAngle);
+            const labelY = centerY + labelRadius * Math.sin(labelAngle);
+
+            const label = document.createElementNS(svg.namespaceURI, "text");
+            label.setAttribute("x", labelX);
+            label.setAttribute("y", labelY);
+            label.setAttribute("text-anchor", "middle");
+            label.setAttribute("class", "pie-label");
+            label.textContent = `${d.percentage.toFixed(1)}%`;
+            svg.appendChild(label);
+        }
+
+        currentAngle = endAngle;
+    });
+
+    // Add legend
+    const legendStartY = height - 60;
+    data.slice(0, 5).forEach((d, i) => {
+        const legendY = legendStartY + i * 12;
+        
+        const rect = document.createElementNS(svg.namespaceURI, "rect");
+        rect.setAttribute("x", 10);
+        rect.setAttribute("y", legendY - 8);
+        rect.setAttribute("width", 10);
+        rect.setAttribute("height", 10);
+        rect.setAttribute("fill", colors[i % colors.length]);
+        svg.appendChild(rect);
+
+        const text = document.createElementNS(svg.namespaceURI, "text");
+        text.setAttribute("x", 25);
+        text.setAttribute("y", legendY);
+        text.setAttribute("class", "legend-text");
+        text.textContent = d.category;
+        svg.appendChild(text);
+    });
+}
+

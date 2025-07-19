@@ -42,3 +42,56 @@ export function processGradesData(progress) {
             passRate: data.total > 0 ? (data.pass / data.total) * 100 : 0
         }));
 }
+
+// processSkillsData function processes skills transactions to create data for pie chart
+export function processSkillsData(skills) {
+    if (!skills?.length) return [];
+    
+    // Use actual skill data directly without artificial categorization
+    const skillGroups = {};
+    
+    skills.forEach(skill => {
+        // Extract skill name from type (remove 'skill_' prefix if present)
+        const skillName = skill.type.startsWith('skill_') 
+            ? skill.type.replace('skill_', '').replace(/_/g, ' ')
+            : skill.type.replace(/_/g, ' ');
+        
+        // Group by actual skill name
+        skillGroups[skillName] = (skillGroups[skillName] || 0) + skill.amount;
+    });
+    
+    // Convert to array and calculate percentages
+    const totalAmount = Object.values(skillGroups).reduce((sum, amount) => sum + amount, 0);
+    
+    return Object.entries(skillGroups)
+        .map(([skillName, amount]) => ({
+            category: skillName,
+            amount: amount,
+            percentage: (amount / totalAmount) * 100
+        }))
+        .sort((a, b) => b.amount - a.amount)
+        .slice(0, 10); // Show top 10 skills
+}
+
+// Helper function to categorize skills
+function getSkillCategory(skillName) {
+    const categories = {
+        'Programming': ['js', 'go', 'rust', 'python', 'java', 'c', 'cpp', 'typescript', 'php'],
+        'Web Development': ['html', 'css', 'react', 'vue', 'angular', 'node', 'express', 'django'],
+        'Database': ['sql', 'mysql', 'postgresql', 'mongodb', 'redis', 'database'],
+        'DevOps': ['docker', 'kubernetes', 'aws', 'azure', 'gcp', 'linux', 'bash', 'git'],
+        'Data Science': ['machine learning', 'ai', 'data analysis', 'statistics', 'pandas', 'numpy'],
+        'Mobile': ['android', 'ios', 'react native', 'flutter', 'swift', 'kotlin'],
+        'Other': []
+    };
+    
+    const lowerSkill = skillName.toLowerCase();
+    
+    for (const [category, keywords] of Object.entries(categories)) {
+        if (keywords.some(keyword => lowerSkill.includes(keyword))) {
+            return category;
+        }
+    }
+    
+    return 'Other';
+}

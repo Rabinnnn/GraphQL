@@ -309,19 +309,46 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
+
+  @media (min-width: 1200px) {
+    #graphs-section {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
   
   .line-graph-container,
-  .bar-graph-chart {
+  .bar-graph-chart,
+  .pie-chart-container {
     height: 100%;
   }
   
   .line-graph-container h4,
-  .bar-graph-chart h4 {
+  .bar-graph-chart h4,
+  .pie-chart-container h4 {
     color: var(--neutral-700);
     margin-bottom: var(--space-md);
     font-size: var(--text-md);
   }
-  
+
+  /* Pie Chart Styles */
+  .pie-slice {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+
+  .pie-slice:hover {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    transform: scale(1.05);
+    transform-origin: center;
+  }
+
+  .pie-label {
+    fill: white;
+    font-size: 11px;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  }
+
   /* Enhanced Chart Styles */
   svg {
     width: 100%;
