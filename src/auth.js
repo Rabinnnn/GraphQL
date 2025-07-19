@@ -1,5 +1,6 @@
 import { SIGNIN_ENDPOINT } from './config.js';
 import { loadProfileData } from './api.js';
+import { initializeNavigation } from './navigation.js';
 
 // initializeAuth is a function that handles the login form submission 
 // and logout button click events.
@@ -33,6 +34,7 @@ export function initializeAuth() {
             document.getElementById("login-page").style.display = "none";
             document.getElementById("profile-page").style.display = "block";
             loadProfileData(token);
+            initializeNavigation();
         } catch (error) {
             loginErrorDiv.textContent = error.message;
             console.error("Login error:", error);
