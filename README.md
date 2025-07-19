@@ -84,4 +84,5 @@ The application connects to the Zone01 GraphQL endpoint to fetch:
 - Optimized for various screen sizes
 
 
-
+### License
+This project is licensed under the MIT License.
