@@ -11,6 +11,13 @@ export function displayUserData(user, transactions) {
     console.log(user.attrs)
     document.getElementById("user-email").textContent = user.email || "Unknown";
     document.getElementById("user-contact").textContent = user.attrs.phone || "Unknown";
+    document.getElementById("user-country").textContent = user.attrs.country || "Unknown";
+
+    document.getElementById("user-name").textContent = user.attrs.displayName || "Unknown";
+    document.getElementById("user-gender").textContent = user.attrs.gender || "Unknown";
+    document.getElementById("user-ID").textContent = user.attrs["ID.NUMBER"] || "Unknown";
+
+
 
     // Calculate and Display user XP and current progress
     const totalXP = transactions.reduce((sum, t) => sum + t.amount, 0);
