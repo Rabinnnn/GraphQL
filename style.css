@@ -322,12 +322,96 @@
     font-size: var(--text-md);
   }
   
+  /* Enhanced Chart Styles */
   svg {
     width: 100%;
     height: 250px;
-    background-color: var(--neutral-50);
+    background: linear-gradient(135deg, var(--neutral-50) 0%, white 100%);
     border: 1px solid var(--neutral-200);
     border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Bar Chart Styles */
+  .bar {
+    fill: url(#barGradient);
+    stroke: var(--primary-600);
+    stroke-width: 1;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  }
+
+  .bar:hover {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    transform: translateY(-2px);
+  }
+
+  .axis-line {
+    stroke: var(--neutral-400);
+    stroke-width: 2;
+  }
+
+  .grid-line {
+    stroke: var(--neutral-200);
+    stroke-width: 1;
+    stroke-dasharray: 3,3;
+    opacity: 0.7;
+  }
+
+  .tick-line {
+    stroke: var(--neutral-400);
+    stroke-width: 1;
+  }
+
+  .tick-label {
+    fill: var(--neutral-600);
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .category-label {
+    fill: var(--neutral-700);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .chart-title {
+    fill: var(--primary-700);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .legend-text {
+    fill: var(--neutral-600);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* Line Graph Styles */
+  .line-path {
+    stroke: url(#lineGradient);
+    stroke-width: 3;
+    fill: none;
+    filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
+  }
+
+  .line-point {
+    fill: var(--primary-500);
+    stroke: white;
+    stroke-width: 2;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    transition: all 0.3s ease;
+  }
+
+  .line-point:hover {
+    r: 7;
+    fill: var(--primary-600);
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  }
+
+  .area-fill {
+    fill: url(#areaGradient);
+    opacity: 0.3;
   }
   
   /* Stats Section */
