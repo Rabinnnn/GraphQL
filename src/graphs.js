@@ -339,10 +339,12 @@ export function drawPieChart(data) {
         return;
     }
 
-    // Color palette for pie slices
+    // Enhanced color palette for pie slices
     const colors = [
-        '#22c55e', '#16a34a', '#15803d', '#166534', '#14532d',
-        '#84cc16', '#65a30d', '#4d7c0f', '#365314', '#1a2e05'
+        '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
+        '#06b6d4', '#f97316', '#84cc16', '#ec4899', '#6366f1',
+        '#14b8a6', '#f43f5e', '#22c55e', '#a855f7', '#0ea5e9',
+        '#dc2626', '#059669', '#d97706', '#7c3aed', '#0891b2'
     ];
 
     // Add gradients for pie slices
@@ -361,7 +363,7 @@ export function drawPieChart(data) {
         const stop2 = document.createElementNS(svg.namespaceURI, "stop");
         stop2.setAttribute("offset", "100%");
         stop2.setAttribute("stop-color", colors[i % colors.length]);
-        stop2.setAttribute("stop-opacity", "0.8");
+        stop2.setAttribute("stop-opacity", "0.7");
         
         gradient.appendChild(stop1);
         gradient.appendChild(stop2);
