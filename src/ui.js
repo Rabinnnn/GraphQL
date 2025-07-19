@@ -7,13 +7,13 @@ export function displayUserData(user, transactions) {
     }
 
     // Display user information
-    document.getElementById("user-name").textContent = user.login || "Unknown";
+    document.getElementById("user-name").textContent = user.attrs.firstName + " " + user.attrs.lastName || "Unknown";
     console.log(user.attrs)
     document.getElementById("user-email").textContent = user.email || "Unknown";
     document.getElementById("user-contact").textContent = user.attrs.phone || "Unknown";
     document.getElementById("user-country").textContent = user.attrs.country || "Unknown";
 
-    document.getElementById("user-name").textContent = user.attrs.displayName || "Unknown";
+    document.getElementById("username").textContent = user.attrs.firstName || "Unknown";
     document.getElementById("user-gender").textContent = user.attrs.gender || "Unknown";
     document.getElementById("user-ID").textContent = user.attrs["ID.NUMBER"] || "Unknown";
 

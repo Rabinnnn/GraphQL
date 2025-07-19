@@ -1,11 +1,11 @@
 /* CSS Variables */
 :root {
     /* Color Palette */
-    --primary-50: #eef2ff;
-    --primary-100: #e0e7ff; 
-    --primary-500: #4361ee;
-    --primary-600: #3a56d4;
-    --primary-700: #2c4cbe;
+    --primary-50: #f0fdf4;
+    --primary-100: #dcfce7; 
+    --primary-500: #22c55e;
+    --primary-600: #16a34a;
+    --primary-700: #15803d;
     
     --accent-500: #ff9f1c;
     --accent-600: #f59300;
