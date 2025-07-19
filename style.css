@@ -203,6 +203,9 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   
   .site-title {
@@ -513,6 +516,10 @@
     border-right: 1px solid var(--neutral-200);
     box-shadow: var(--shadow-sm);
     padding: var(--space-lg) 0;
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
   }
 
   .nav-links {
