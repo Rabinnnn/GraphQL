@@ -258,16 +258,23 @@
   .user-info-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
+    gap: var(--space-xl);
   }
 
   .user-info-col p {
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
+    padding: var(--space-sm) 0;
+  }
+
+  .user-info-col p:last-child {
+    margin-bottom: 0;
   }
 
   @media (max-width: 600px) {
     .user-info-grid {
       grid-template-columns: 1fr;
+      gap: var(--space-lg);
     }
   }
   
