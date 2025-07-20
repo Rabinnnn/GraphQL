@@ -44,7 +44,7 @@ export function initializeAuth() {
     document.getElementById("logout-btn").addEventListener("click", () => {
         localStorage.removeItem("jwt");
         localStorage.removeItem("userId");
-        document.getElementById("login-page").style.display = "block";
+        document.getElementById("login-page").style.display = "flex";
         document.getElementById("profile-page").style.display = "none";
     });
 }
